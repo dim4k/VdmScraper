@@ -31,10 +31,20 @@ docker-compose up -d
 
 *Composer install and create database*
 ```sh
+# Enter Docker bash commands
 docker-compose exec php bash
+
+# Create Symfony default parameters
+cd app/config cp parameters.yml.dist parameters.yml
+
+# Install Composer dependencies
 composer install
+
+# Create database
 sf3 doctrine:database:create
 sf3 doctrine:schema:update --force
+
+# Exit Docker bash commands
 exit
 ```
 
