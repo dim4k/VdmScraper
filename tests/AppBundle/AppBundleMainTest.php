@@ -13,6 +13,9 @@ use Doctrine\Bundle\DoctrineBundle\Command\DropDatabaseDoctrineCommand;
 use Doctrine\Bundle\DoctrineBundle\Command\CreateDatabaseDoctrineCommand;
 use Doctrine\Bundle\DoctrineBundle\Command\Proxy\CreateSchemaDoctrineCommand;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Command\ScrapVdmCommand;
+use Symfony\Component\Console\Tester\CommandTester;
+
 
 class AppBundleMainTests extends WebTestCase
 {
@@ -178,6 +181,29 @@ class AppBundleMainTests extends WebTestCase
 		$this->assertJsonStringEqualsJsonString($client->getResponse()->getContent(),
 			'{"id":2,"content":"Content number 2 of vdm scraper","date":"2017-07-10 00:00:00","author":"Author1"}',
 			'Unexpected Json response');
+	}
+
+	public function testExecute()
+	{
+		self::bootKernel();
+		$application = new Application(self::$kernel);
+
+		$application->add(new ScrapVdmCommand());
+
+		$command = $application->find('app:scrap-vdm');
+		$commandTester = new CommandTester($command);
+		$commandTester->execute(array(
+			'command'  => $command->getName(),
+
+			// pass arguments to the helper
+			'limit' => '15',
+		));
+
+		// the output of the command in the console
+		$output = $commandTester->getDisplay();
+		$this->assertContains('VDM SCRAPER', $output,'Unexpected output for the command scrap-vdm');
+		$this->assertContains('Limit : 15', $output,'Unexpected output for the command scrap-vdm, limit is not take as parameter');
+		$this->assertContains('Success !', $output,'Something went wrong during scraping');
 	}
 
 }
