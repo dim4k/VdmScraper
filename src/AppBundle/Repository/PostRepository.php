@@ -14,13 +14,21 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 	{
 		$qb = $this->createQueryBuilder('a');
 
-		$qb->where('a.author = :author')
-			->setParameter('author', $author)
-			->andWhere('a.date <= :to')
-			->setParameter('to', $to)
-			->andWhere('a.date >= :from')
-			->setParameter('from', $from)
-		;
+		if($author != null){
+			$qb->where('a.author = :author')
+				->setParameter('author', $author);
+		}
+
+		if($from != null){
+			$qb->andWhere('a.date <= :from')
+				->setParameter('from', $from);
+		}
+
+		if($to != null){
+			$qb->andWhere('a.date <= :to')
+				->setParameter('to', $to);
+		}
+
 
 		return $qb
 			->getQuery()

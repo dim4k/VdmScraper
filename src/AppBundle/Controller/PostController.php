@@ -17,18 +17,18 @@ class PostController extends Controller
 {
 	public function getPostsAction(Request $request)
 	{
-		$places = $this->get('doctrine.orm.entity_manager')
+		$posts = $this->get('doctrine.orm.entity_manager')
 			->getRepository('AppBundle:Post')
 			->findByDateAndAuthor($request->query->get('author'),$request->query->get('from'),$request->query->get('to'));
-		/* @var $places Post[] */
 
+		/* @var $posts Post[] */
 		$formatted = [];
-		foreach ($places as $place) {
+		foreach ($posts as $post) {
 			$formatted[] = [
-				'id' => $place->getId(),
-				'content' => $place->getContent(),
-				'date' => $place->getDate(),
-				'author' => $place->getAuthor()
+				'id' => $post->getId(),
+				'content' => $post->getContent(),
+				'date' => $post->getDate(),
+				'author' => $post->getAuthor()
 			];
 		}
 
@@ -37,20 +37,20 @@ class PostController extends Controller
 
 	public function getPostAction(Request $request)
 	{
-		$place = $this->get('doctrine.orm.entity_manager')
+		$post = $this->get('doctrine.orm.entity_manager')
 			->getRepository('AppBundle:Post')
 			->find($request->get('post_id'));
-		/* @var $place Post */
+		/* @var $post Post */
 
-		if (empty($place)) {
+		if (empty($post)) {
 			return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
 		}
 
 		$formatted = [
-			'id' => $place->getId(),
-			'content' => $place->getContent(),
-			'date' => $place->getDate(),
-			'author' => $place->getAuthor()
+			'id' => $post->getId(),
+			'content' => $post->getContent(),
+			'date' => $post->getDate(),
+			'author' => $post->getAuthor()
 		];
 
 		return new JsonResponse($formatted);

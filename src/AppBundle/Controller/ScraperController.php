@@ -23,11 +23,18 @@ class ScraperController extends Controller
 	 */
 	public function ScrapAction(Request $request)
 	{
-		$scraper = new Scraper;
+		$scraper = new Scraper();
 
-		$scraper->scrap();
+		$posts = $scraper->scrap()->getPosts();
 
-		return new JsonResponse([]);
+		foreach($posts as $post) {
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($post);
+			$em->flush();
+			$em->clear();
+		}
+
+		return new JsonResponse($posts);
 	}
 
 }
