@@ -62,7 +62,7 @@ docker network inspect bridge | grep Gateway
 
 Execute the scraper
 ----
-*Composer install and create database*
+
 ```sh
 # Enter Docker bash commands
 docker-compose exec php bash
