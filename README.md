@@ -78,6 +78,6 @@ Use a Rest client or simply use Curl to access the API
 
 * /api/posts
 * /api/posts?from=2014-01-01&amp;to=2014-12-31
-* /api/posts/<id>
+* /api/posts/&lt;id&gt;
 
 
