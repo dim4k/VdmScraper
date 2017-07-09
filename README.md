@@ -17,6 +17,7 @@ Bundle / Libraries used
 Server requirements
 ----
 * Docker
+*Note : You can still deploy this app with a classic PHP5+ / Nginx / MySQL stack, if so be sure to change 'sf3' alias in command by 'php bin/console'and don't mind the 'Enter Docker bash commands' steps.*
 
 Installation
 ----
