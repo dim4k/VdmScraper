@@ -132,7 +132,7 @@ class AppBundleMainTests extends WebTestCase
 		$client = $this->createClient();
 
 		// Test with dates parameters
-		$client->request('GET', '/posts?from=2018-01-01&to=2017-01-01');
+		$client->request('GET', '/posts?from=2017-01-01&to=2017-09-01');
 
 		$response = $client->getResponse();
 
@@ -142,8 +142,8 @@ class AppBundleMainTests extends WebTestCase
 		$this->assertSame('application/json', $response->headers->get('Content-Type'));
 		// Test response content fetch json format and test data
 		$this->assertJsonStringEqualsJsonString($client->getResponse()->getContent(),
-			'{"posts":[{"id":1,"content":"First content test of vdm scraper","date":"2017-01-01 00:00:00","author":"Author1"},{"id":3,"content":"Content number 3 of vdm scraper","date":"2016-02-01 00:00:00","author":"Author2"}],"count":2}',
-			'Unexpected Json response');
+			'{"posts":[{"id":1,"content":"First content test of vdm scraper","date":"2017-01-01 00:00:00","author":"Author1"},{"id":2,"content":"Content number 2 of vdm scraper","date":"2017-07-10 00:00:00","author":"Author1"}],"count":2}',
+			$client->getResponse()->getContent());
 
 		// Test with author parameter
 		$client->request('GET', '/posts?author=Author1');
