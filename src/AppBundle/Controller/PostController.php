@@ -27,12 +27,14 @@ class PostController extends Controller
 			$formatted[] = [
 				'id' => $post->getId(),
 				'content' => $post->getContent(),
-				'date' => $post->getDate(),
+				'date' => $post->getDate()->format('Y-m-d H:i:s'),
 				'author' => $post->getAuthor()
 			];
 		}
 
-		return new JsonResponse($formatted);
+		$response = new Response(json_encode($formatted, JSON_UNESCAPED_UNICODE));
+		$response->headers->set('Content-Type', 'application/json');
+		return $response;
 	}
 
 	public function getPostAction(Request $request)
@@ -49,10 +51,12 @@ class PostController extends Controller
 		$formatted = [
 			'id' => $post->getId(),
 			'content' => $post->getContent(),
-			'date' => $post->getDate(),
+			'date' => $post->getDate()->format('Y-m-d H:i:s'),
 			'author' => $post->getAuthor()
 		];
 
-		return new JsonResponse($formatted);
+		$response = new Response(json_encode($formatted, JSON_UNESCAPED_UNICODE));
+		$response->headers->set('Content-Type', 'application/json');
+		return $response;
 	}
 }
