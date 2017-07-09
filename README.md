@@ -59,3 +59,25 @@ exit
 ```sh
 docker network inspect bridge | grep Gateway
 ```
+
+Exectue the scraper
+----
+*Composer install and create database*
+```sh
+# Enter Docker bash commands
+docker-compose exec php bash
+
+# Launch scraping | {limit} : number of post scraped
+sf3 app:scrap-vdm {limit}
+```
+
+Access the API
+----
+
+Use a Rest client or simply use Curl to access the API
+
+* /api/posts
+* /api/posts?from=2014-01-01&amp;to=2014-12-31
+* /api/posts/<id>
+
+

@@ -20,13 +20,15 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 		}
 
 		if($from != null){
+			$fromFormat = new \DateTime($from);
 			$qb->andWhere('a.date <= :from')
-				->setParameter('from', $from);
+				->setParameter('from', $fromFormat);
 		}
 
 		if($to != null){
+			$toFormat = new \DateTime($to);
 			$qb->andWhere('a.date <= :to')
-				->setParameter('to', $to);
+				->setParameter('to', $toFormat);
 		}
 
 
