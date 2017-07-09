@@ -32,7 +32,11 @@ class PostController extends Controller
 			];
 		}
 
-		$response = new Response(json_encode($formatted, JSON_UNESCAPED_UNICODE));
+		$resObject = new \stdClass();
+		$resObject->posts = $formatted;
+		$resObject->count = count($formatted);
+
+		$response = new Response(json_encode($resObject, JSON_UNESCAPED_UNICODE));
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
 	}
