@@ -87,10 +87,6 @@ Test the app
 # Enter Docker bash commands
 docker-compose exec php bash
 
-# Create test database
-sf3 doctrine:database:create --env=test
-sf3 doctrine:schema:update --env=test --force
-
 # Launch tests
 php vendor/phpunit/phpunit/phpunit
 ```

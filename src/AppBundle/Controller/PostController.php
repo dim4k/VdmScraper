@@ -41,11 +41,11 @@ class PostController extends Controller
 		return $response;
 	}
 
-	public function getPostAction(Request $request)
+	public function getPostAction($id, Request $request)
 	{
 		$post = $this->get('doctrine.orm.entity_manager')
 			->getRepository('AppBundle:Post')
-			->find($request->get('post_id'));
+			->find($id);
 		/* @var $post Post */
 
 		if (empty($post)) {
