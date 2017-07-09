@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use AppBundle\Entity\Post;
 use AppBundle\Service\Scraper;
 
 class ScrapVdmCommand extends ContainerAwareCommand
@@ -33,7 +34,7 @@ class ScrapVdmCommand extends ContainerAwareCommand
 	{
 		$postLimit = $input->getArgument('limit') != null || $input->getArgument('limit') != '' ? $input->getArgument('limit'):20;;
 
-		// outputs multiple lines to the console (adding "\n" at the end of each line)
+		// output multiple lines to the console
 		$output->writeln([
 			'',
 			'=================================================================',
@@ -49,14 +50,24 @@ class ScrapVdmCommand extends ContainerAwareCommand
 		$posts = $scraper->scrap()->getPosts();
 
 		$output->writeln('Writing in database...');
+
+		/* @var $post Post */
 		foreach($posts as $key=>$post) {
-			$em = $this->getContainer()->get('doctrine')->getManager();
-			$em->persist($post);
-			$em->flush();
-			$em->clear();
+
+			//Check if post is not already in database
+			$existingPost =  $this->getContainer()->get('doctrine.orm.entity_manager')
+				->getRepository('AppBundle:Post')
+				->findOneBy(array('author' => $post->getAuthor(), 'content' => $post->getContent()));
+
+			//If not, persist the entity
+			if(!$existingPost) {
+				$em = $this->getContainer()->get('doctrine')->getManager();
+				$em->persist($post);
+				$em->flush();
+				$em->clear();
+			}
 		}
 
-		// outputs a message followed by a "\n"
 		$output->writeln(['','Success !','']);
 	}
 
