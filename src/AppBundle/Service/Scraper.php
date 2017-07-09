@@ -61,7 +61,12 @@ class Scraper
 
 					// GET DATE
 					if(substr($arr[0], 0, 1) != '-') {
-						$post->setDate($this->formatDate($arr[1]));
+						if(isset($arr[1])) {
+							$post->setDate($this->formatDate($arr[1]));
+						}else{
+							$date = new \DateTime();
+							$post->setDate($date);
+						}
 					}else{
 						$post->setDate($this->formatDate(substr($arr[0], 2)));
 					}
