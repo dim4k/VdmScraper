@@ -60,7 +60,7 @@ exit
 docker network inspect bridge | grep Gateway
 ```
 
-Exectue the scraper
+Execute the scraper
 ----
 *Composer install and create database*
 ```sh
@@ -80,4 +80,18 @@ Use a Rest client or simply use Curl to access the API
 * /api/posts?from=2014-01-01&amp;to=2014-12-31
 * /api/posts/&lt;id&gt;
 
+Test the app
+----
+
+```sh
+# Enter Docker bash commands
+docker-compose exec php bash
+
+# Create test database
+sf3 doctrine:database:create --env=test
+sf3 doctrine:schema:update --env=test --force
+
+# Launch tests
+php vendor/phpunit/phpunit/phpunit
+```
 
