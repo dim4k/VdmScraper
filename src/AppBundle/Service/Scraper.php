@@ -10,15 +10,13 @@ use Goutte\Client;
 class Scraper
 {
 	private $url;
-
 	private $posts;
-
 	private $postLimit;
 
-	public function __construct()
+	public function __construct($postLimit = 20)
 	{
 		$this->url = "http://www.viedemerde.fr/";
-		$this->postLimit = 5;
+		$this->postLimit = $postLimit != null || $postLimit != '' ? $postLimit:20;
 		$this->posts = array();
 	}
 
