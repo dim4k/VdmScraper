@@ -7,6 +7,13 @@ Version
 ----
 Current Version 0.1
 
+Bundle / Libraries used
+----
+
+* friendsofsymfony/rest-bundle
+* symfony/dom-crawler
+* fabpot/goutte
+
 Server requirements
 ----
 * Docker

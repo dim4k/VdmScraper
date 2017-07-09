@@ -1,3 +1,7 @@
+places:
+    resource: AppBundle\Controller\PostController
+    type:     rest
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
