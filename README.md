@@ -43,7 +43,9 @@ docker-compose up -d
 docker-compose exec php bash
 
 # Create Symfony default parameters
-cd app/config cp parameters.yml.dist parameters.yml
+cd app/config
+cp parameters.yml.dist parameters.yml
+cd ../../
 
 # Install Composer dependencies
 composer install
